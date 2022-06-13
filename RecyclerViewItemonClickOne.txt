@@ -1,0 +1,55 @@
+
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+    ArrayList<MyEntity> arrayList;
+    Context context;
+//Secound time recyclerview item onclick 
+    OnDataItemClickListener clickListener;
+
+    public MyAdapter(ArrayList<MyEntity> arrayList, Context context, OnDataItemClickListener clickListener) {
+        this.arrayList = arrayList;
+        this.context = context;
+        this.clickListener =clickListener;
+    }
+//First time recyclerview item onclick 
+    public interface OnDataItemClickListener{
+        void onDeleteClickListener(int position);
+        void onEditClickListener(int position);
+    }
+
+
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample,parent,false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+       
+//Third time recyclerview item onclick 
+        holder.sampleDelete.setOnClickListener(v -> {
+            clickListener.onDeleteClickListener(position);
+        });
+        holder.sampleEdit.setOnClickListener(v -> {
+            clickListener.onEditClickListener(position);
+        });
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return arrayList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder{
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            
+        }
+    }
+}
